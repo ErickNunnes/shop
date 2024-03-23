@@ -70,7 +70,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
     return isValidUrl && endsWithFile;
   }
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) {
@@ -80,12 +80,15 @@ class _ProductFormPageState extends State<ProductFormPage> {
     _formKey.currentState?.save();
 
     setState(() => _isLoading = true);
-
-    Provider.of<ProductList>(
+    try{
+      await Provider.of<ProductList>(
       context,
       listen: false,
-    ).saveProduct(_formData).catchError((error) {
-      return showDialog<void>(
+    ).saveProduct(_formData);
+    if (context.mounted)Navigator.of(context).pop();
+    } catch(error) {
+      if (context.mounted){
+      await showDialog<void>(
         context: context,
         builder: (ctx) => AlertDialog(
           backgroundColor: Colors.white,
@@ -94,16 +97,17 @@ class _ProductFormPageState extends State<ProductFormPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Ok'))
-          ],
-        )
+              child: const Text('Ok'),
+              ),
+            ],
+          )
         );
-    }).then((value) {
-      setState(() => _isLoading = false);
-      Navigator.of(context).pop();
-    });
-    
-  }
+      }
+    } finally {
+        setState(() => _isLoading = false);
+        
+      }
+    }
 
   @override
   Widget build(BuildContext context) {
