@@ -19,6 +19,7 @@ class _CounterPageState extends State<CounterPage> {
         centerTitle: true,
         title: const Text('Exemplo Contador'),
       ),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Text(provider?.state.value.toString() ?? '0'),

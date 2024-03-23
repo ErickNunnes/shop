@@ -25,8 +25,8 @@ class ProductsPage extends StatelessWidget {
           )
         ],
       ),
-      drawer: const AppDrawer(),
       backgroundColor: Colors.white,
+      drawer: const AppDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: ListView.builder(

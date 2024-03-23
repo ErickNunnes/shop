@@ -25,8 +25,8 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         backgroundColor: Colors.purple,
+        centerTitle: true,
         title: const Text('Minha Loja'),
         actions: [
           PopupMenuButton(
